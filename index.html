@@ -79,6 +79,7 @@
 
       input[type='date'],
       input[type='number'],
+      input[type='datetime-local'], /* 新增了 datetime-local 的樣式支援 */
       select {
         width: 100%;
         padding: 6px 8px;
@@ -168,7 +169,6 @@
       <h1>記錄頭痛運動日誌</h1>
       <div class="subtitle">慢跑前後的身體與心情，通通一起記下來。</div>
 
-      <!-- 運動前評估 -->
       <div class="card" id="pre-card">
         <div class="card-title">
           運動前評估
@@ -177,8 +177,8 @@
 
         <div class="form-row">
           <div class="form-group">
-            <label for="exerciseDate">運動日期</label>
-            <input type="date" id="exerciseDate" />
+            <label for="exerciseDate">運動日期與時間</label>
+            <input type="datetime-local" id="exerciseDate" />
           </div>
 
           <div class="form-group">
@@ -213,7 +213,6 @@
         </div>
       </div>
 
-      <!-- 運動後紀錄 -->
       <div class="card" id="post-card">
         <div class="card-title">
           運動後紀錄
@@ -300,13 +299,11 @@
 
           <div class="form-group">
             <label for="stepsAfter">運動後步數</label>
-            <!-- 需求原文寫「運動前步數」，此處實務上改為運動後步數 -->
             <input type="number" id="stepsAfter" min="0" placeholder="運動結束當下的步數" />
           </div>
         </div>
       </div>
 
-      <!-- 送出 -->
       <div class="button-row">
         <button type="button" class="btn-secondary" id="resetBtn">清除重填</button>
         <button type="button" class="btn-primary" id="submitBtn">送出記錄</button>
@@ -316,6 +313,7 @@
     </div>
 
     <script>
+      // ★ 已更新為最新部署網址 (版本 6)
       const WEB_APP_URL =
         'https://script.google.com/macros/s/AKfycbzAIoupjXUklcZUV6DsBa0gRp859BaXkn--xUR6jIrSECBcHsoCVg2iT93j910t41bW/exec';
 
@@ -334,7 +332,7 @@
 
       function clearForm() {
         document
-          .querySelectorAll('input[type="date"], input[type="number"], select')
+          .querySelectorAll('input[type="date"], input[type="number"], input[type="datetime-local"], select')
           .forEach((el) => (el.value = ''));
 
         document.querySelectorAll('input[type=radio]').forEach((el) => {
@@ -345,6 +343,9 @@
         if (naRadio) naRadio.checked = true;
 
         setStatus('');
+
+        // 清除後重新設定現在時間 (UX 考量)
+        setInitialDateTime();
       }
 
       // 是否分段 → 自動調整「不適用」
@@ -358,6 +359,19 @@
           if (naRadio) naRadio.checked = true;
         }
       });
+
+      // ★ 新增：設定 datetime-local 欄位為現在時間的功能
+      function setInitialDateTime() {
+        const dateInput = $('exerciseDate');
+        if (dateInput) {
+            const now = new Date();
+            // 調整時區 (getTimezoneOffset) 並轉成 ISO 格式 (YYYY-MM-DDTHH:mm)
+            // 這是 datetime-local 欄位需要的標準格式
+            now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+            const currentDateTime = now.toISOString().slice(0, 16);
+            dateInput.value = currentDateTime;
+        }
+      }
 
       // ⭐⭐⭐ 最終成功版 fetch（無 Content-Type → 避免被 CORS 擋）
       document.getElementById('submitBtn').addEventListener('click', async () => {
@@ -382,7 +396,7 @@
         };
 
         if (!payload.exerciseDate) {
-          setStatus('請先選擇「運動日期」。', true);
+          setStatus('請先選擇「運動日期與時間」。', true);
           return;
         }
         if (!payload.runIndex) {
@@ -399,20 +413,31 @@
             body: JSON.stringify(payload),
           });
 
+          // 檢查 HTTP 狀態碼
+          if (!res.ok) {
+            // 如果 GAS 部署有問題 (例如權限或 404)，會被 catch 捕獲，但如果只是 GAS 內部回傳 500，這個判斷式會幫忙捕獲
+            throw new Error(`HTTP Error status: ${res.status}`);
+          }
+
           const json = await res.json();
 
           if (json.result === 'success') {
-            setStatus('已完成記錄，辛苦啦！', false);
+            setStatus('✅ 已完成記錄，辛苦啦！', false);
           } else {
-            setStatus('送出失敗，請稍後再試一次。', true);
+            // GAS 內部回傳 error
+            setStatus(`送出失敗：${json.error || '後端錯誤'}，請稍後再試一次。`, true);
           }
         } catch (err) {
           console.error(err);
-          setStatus('無法連線到記錄表，請檢查網路或 Web App 設定。', true);
+          setStatus('❌ 無法連線到記錄表，請檢查網路或 Web App 設定。', true);
         }
       });
 
       document.getElementById('resetBtn').addEventListener('click', () => clearForm());
+
+      // 網頁載入時，自動填入現在時間
+      window.addEventListener('load', setInitialDateTime);
+
     </script>
   </body>
 </html>
