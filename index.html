@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
   <head>
     <meta charset="UTF-8" />
-    <title>記錄頭痛運動日誌</title>
+    <title>豆子擊退頭痛日誌</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
       body {
@@ -79,7 +79,7 @@
 
       input[type='date'],
       input[type='number'],
-      input[type='datetime-local'], /* 新增了 datetime-local 的樣式支援 */
+      input[type='datetime-local'],
       select {
         width: 100%;
         padding: 6px 8px;
@@ -195,7 +195,19 @@
 
           <div class="form-group">
             <label for="moodBefore">運動前心情（1–10 分）</label>
-            <input type="number" id="moodBefore" min="1" max="10" step="1" placeholder="1-10" />
+            <select id="moodBefore">
+              <option value="">請選擇</option>
+              <option value="1">1 (極差)</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10 (極好)</option>
+            </select>
             <div class="hint">分數越高代表心情越好</div>
           </div>
         </div>
@@ -249,7 +261,7 @@
               <label> <input type="radio" name="segmentedDone" value="有" />有 </label>
               <label> <input type="radio" name="segmentedDone" value="沒有" />沒有 </label>
               <label>
-                <input type="radio" name="segmentedDone" value="不適用" checked />不適用
+                <input type="radio" name="segmentedDone" value="不適用" />不適用
               </label>
             </div>
             <div class="hint">若沒分段，可維持「不適用」</div>
@@ -294,7 +306,19 @@
 
           <div class="form-group">
             <label for="moodAfter">運動後心情（1–10 分）</label>
-            <input type="number" id="moodAfter" min="1" max="10" step="1" placeholder="1-10" />
+            <select id="moodAfter">
+              <option value="">請選擇</option>
+              <option value="1">1 (極差)</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10 (極好)</option>
+            </select>
           </div>
 
           <div class="form-group">
@@ -313,7 +337,6 @@
     </div>
 
     <script>
-      // ★ 已更新為最新部署網址 (版本 6)
       const WEB_APP_URL =
         'https://script.google.com/macros/s/AKfycbzAIoupjXUklcZUV6DsBa0gRp859BaXkn--xUR6jIrSECBcHsoCVg2iT93j910t41bW/exec';
 
@@ -339,34 +362,40 @@
           el.checked = false;
         });
 
-        const naRadio = document.querySelector('input[name="segmentedDone"][value="不適用"]');
-        if (naRadio) naRadio.checked = true;
+        // 變更：不再手動設置「不適用」為 checked
+        // const naRadio = document.querySelector('input[name="segmentedDone"][value="不適用"]');
+        // if (naRadio) naRadio.checked = true;
 
         setStatus('');
 
-        // 清除後重新設定現在時間 (UX 考量)
         setInitialDateTime();
       }
 
-      // 是否分段 → 自動調整「不適用」
+      // 是否分段 → 自動調整「分段進行後，是否有完成？」的狀態
       document.getElementById('segmentedGroup').addEventListener('change', () => {
         const segmented = getRadioValue('segmented');
+        // 取得「不適用」的 Radio 按鈕
         const naRadio = document.querySelector('input[name="segmentedDone"][value="不適用"]');
 
-        if (segmented === '有') {
-          if (naRadio) naRadio.checked = false;
-        } else if (segmented === '沒有') {
+        // 清空所有選項
+        document.querySelectorAll('input[name="segmentedDone"]').forEach(el => el.checked = false);
+
+
+        if (segmented === '沒有') {
+          // 如果沒有分段，預設選取「不適用」
           if (naRadio) naRadio.checked = true;
+        } else if (segmented === '有') {
+          // 如果有分段，則不選任何項目 (讓使用者選擇 有/沒有 完成)
+          // 邏輯上，我們只清空，不自動選取「不適用」
         }
       });
 
-      // ★ 新增：設定 datetime-local 欄位為現在時間的功能
+      // 設定 datetime-local 欄位為現在時間的功能
       function setInitialDateTime() {
         const dateInput = $('exerciseDate');
         if (dateInput) {
             const now = new Date();
             // 調整時區 (getTimezoneOffset) 並轉成 ISO 格式 (YYYY-MM-DDTHH:mm)
-            // 這是 datetime-local 欄位需要的標準格式
             now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
             const currentDateTime = now.toISOString().slice(0, 16);
             dateInput.value = currentDateTime;
@@ -403,6 +432,15 @@
           setStatus('請先填寫「這週第幾次有氧慢跑」。', true);
           return;
         }
+        if (!payload.moodBefore) {
+            setStatus('請先填寫「運動前心情」。', true);
+            return;
+        }
+        if (!payload.moodAfter) {
+            setStatus('請先填寫「運動後心情」。', true);
+            return;
+        }
+
 
         try {
           setStatus('資料送出中，請稍候…');
@@ -415,7 +453,6 @@
 
           // 檢查 HTTP 狀態碼
           if (!res.ok) {
-            // 如果 GAS 部署有問題 (例如權限或 404)，會被 catch 捕獲，但如果只是 GAS 內部回傳 500，這個判斷式會幫忙捕獲
             throw new Error(`HTTP Error status: ${res.status}`);
           }
 
