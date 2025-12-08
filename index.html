@@ -3,199 +3,170 @@
   <head>
     <meta charset="UTF-8" />
     <title>豆子擊退頭痛日誌</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
+      /* 確保中文字體優先 */
       body {
-        font-family: -apple-system, BlinkMacSystemFont, 'Noto Sans TC', 'Microsoft JhengHei',
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Noto Sans TC', 'Microsoft JhengHei',
           sans-serif;
-        background: #f7f7fb;
-        margin: 0;
-        padding: 0;
-        color: #333;
       }
-
-      .page-wrapper {
-        max-width: 900px;
-        margin: 0 auto;
-        padding: 24px 16px 40px;
-      }
-
-      h1 {
-        text-align: center;
-        font-size: 24px;
-        margin-bottom: 8px;
-      }
-
-      .subtitle {
-        text-align: center;
-        font-size: 14px;
-        color: #777;
-        margin-bottom: 24px;
-      }
-
-      .card {
-        background: #fff;
-        border-radius: 12px;
-        padding: 20px 16px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
-        margin-bottom: 16px;
-      }
-
-      .card-title {
-        font-size: 18px;
-        font-weight: 700;
-        margin-bottom: 12px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-
-      .card-title span.badge {
-        font-size: 12px;
-        padding: 2px 8px;
-        border-radius: 999px;
-        background: #eef2ff;
-        color: #4f46e5;
-      }
-
-      .form-row {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px 20px;
-        margin-bottom: 12px;
-      }
-
-      .form-group {
-        flex: 1 1 180px;
-        min-width: 160px;
-      }
-
-      label {
-        display: block;
-        font-size: 13px;
-        margin-bottom: 4px;
-        color: #444;
-      }
-
-      input[type='date'],
-      input[type='number'],
-      input[type='datetime-local'],
-      select {
-        width: 100%;
-        padding: 6px 8px;
-        font-size: 14px;
-        border-radius: 6px;
-        border: 1px solid #ccc;
-        box-sizing: border-box;
-      }
-
+      /* 隱藏數字輸入框的上下箭頭 */
       input[type='number']::-webkit-inner-spin-button,
       input[type='number']::-webkit-outer-spin-button {
         -webkit-appearance: none;
         margin: 0;
       }
-
-      .radio-group {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px 16px;
-        font-size: 13px;
-      }
-
-      .radio-group label {
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
-        cursor: pointer;
-        margin-bottom: 0;
-      }
-
-      .hint {
-        font-size: 12px;
-        color: #888;
-        margin-top: 2px;
-      }
-
-      .button-row {
-        margin-top: 16px;
-        display: flex;
-        justify-content: flex-end;
-        gap: 10px;
-      }
-
-      button {
-        border-radius: 999px;
-        border: none;
-        padding: 8px 18px;
-        font-size: 14px;
-        cursor: pointer;
-      }
-
-      .btn-secondary {
-        background: #e5e7eb;
-        color: #374151;
-      }
-
-      .btn-primary {
-        background: #4f46e5;
-        color: #fff;
-      }
-
-      .status-message {
-        margin-top: 12px;
-        font-size: 13px;
-      }
-
-      .status-message.ok {
-        color: #16a34a;
-      }
-
-      .status-message.error {
-        color: #dc2626;
-      }
-
-      @media (max-width: 600px) {
-        .card {
-          padding: 16px 12px;
-        }
-        h1 {
-          font-size: 20px;
-        }
+      /* 確保選擇圖標時輸入框被隱藏 */
+      .icon-radio-group input[type='radio'] {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
       }
     </style>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'primary-indigo': '#4f46e5',
+            }
+          }
+        }
+      }
+    </script>
   </head>
-  <body>
-    <div class="page-wrapper">
-      <h1>記錄頭痛運動日誌</h1>
-      <div class="subtitle">慢跑前後的身體與心情，通通一起記下來。</div>
+  <body class="bg-gray-50 text-gray-800 antialiased min-h-screen">
+    <div class="max-w-3xl mx-auto p-4 sm:p-6 lg:p-10">
+      <h1 class="text-center text-3xl font-extrabold text-primary-indigo mb-2 mt-4">
+        豆子擊退頭痛日誌 <!-- 標題已更新 -->
+      </h1>
+      <p class="text-center text-sm text-gray-500 mb-8">
+        慢跑前後的身體與心情，通通一起記下來。 <!-- 副標題已更新 -->
+      </p>
 
-      <div class="card" id="pre-card">
-        <div class="card-title">
+      <!-- Web App URL (請替換為您的 Google Script URL) -->
+      <script>
+        const WEB_APP_URL =
+          'https://script.google.com/macros/s/AKfycbzAIoupjXUklcZUV6DsBa0gRp859BaXkn--xUR6jIrSECBcHsoCVg2iT93j910t41bW/exec';
+      </script>
+
+      <!-- 運動前評估 Card -->
+      <div class="card bg-white rounded-xl shadow-xl p-5 sm:p-6 mb-6">
+        <div class="text-xl font-bold mb-4 flex items-center gap-3 text-gray-700">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary-indigo" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
           運動前評估
-          <span class="badge">Before</span>
+          <span class="text-xs px-3 py-1 bg-indigo-100 text-primary-indigo font-medium rounded-full">Before</span>
         </div>
 
-        <div class="form-row">
-          <div class="form-group">
-            <label for="exerciseDate">運動日期與時間</label>
-            <input type="datetime-local" id="exerciseDate" />
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-4">
+          <!-- 運動日期與時間 -->
+          <div class="form-group col-span-full md:col-span-1">
+            <label for="exerciseDate" class="block text-sm font-medium text-gray-700 mb-1">運動日期與時間</label>
+            <input type="datetime-local" id="exerciseDate" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-primary-indigo focus:border-primary-indigo" />
           </div>
+        </div>
 
-          <div class="form-group">
-            <label for="bodyStatusBefore">運動前身體狀況</label>
-            <select id="bodyStatusBefore">
-              <option value="">請選擇</option>
-              <option value="非常好">非常好</option>
-              <option value="良好">良好</option>
-              <option value="一般">一般</option>
-              <option value="較差">較差</option>
-              <option value="很差">很差</option>
-            </select>
+        <!-- 身體狀況：使用圖示 Radio Group -->
+        <div class="form-group mt-4 col-span-full">
+          <label class="block text-sm font-medium text-gray-700 mb-2">運動前身體狀況</label>
+          <div id="bodyStatusBeforeGroup" class="icon-radio-group flex justify-around space-x-2 sm:space-x-4">
+            <!-- 非常好 (綠色) -->
+            <label for="status-before-1" class="cursor-pointer group">
+              <input type="radio" id="status-before-1" name="bodyStatusBefore" value="非常好" class="hidden peer">
+              <div class="p-2 rounded-xl text-center transition-all border-2 border-gray-200 peer-checked:border-green-600 peer-checked:bg-green-50 shadow-sm hover:shadow-md">
+                <div class="w-12 h-12 sm:w-16 sm:h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-1 group-hover:bg-green-200 transition-colors">
+                  <!-- SVG for '非常好' -->
+                  <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 sm:w-14 sm:h-14 drop-shadow-sm">
+                    <ellipse cx="32" cy="56" rx="12" ry="4" fill="#795548"></ellipse>
+                    <path d="M32 56C32 56 34 40 32 28" stroke="#4CAF50" stroke-width="4" stroke-linecap="round"></path>
+                    <path d="M32 28C26 20 14 22 10 28C14 34 26 32 32 28Z" fill="#4CAF50"></path>
+                    <path d="M32 28C38 20 50 22 54 28C50 34 38 32 32 28Z" fill="#4CAF50"></path>
+                  </svg>
+                </div>
+                <span class="text-xs sm:text-sm text-gray-700">非常好</span>
+              </div>
+            </label>
+
+            <!-- 良好 (淺綠色) -->
+            <label for="status-before-2" class="cursor-pointer group">
+              <input type="radio" id="status-before-2" name="bodyStatusBefore" value="良好" class="hidden peer">
+              <div class="p-2 rounded-xl text-center transition-all border-2 border-gray-200 peer-checked:border-lime-600 peer-checked:bg-lime-50 shadow-sm hover:shadow-md">
+                <div class="w-12 h-12 sm:w-16 sm:h-16 bg-lime-100 rounded-full flex items-center justify-center mx-auto mb-1 group-hover:bg-lime-200 transition-colors">
+                  <!-- SVG for '良好' -->
+                  <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 sm:w-14 sm:h-14 drop-shadow-sm">
+                    <ellipse cx="32" cy="56" rx="12" ry="4" fill="#795548"></ellipse>
+                    <path d="M32 56C32 56 33 42 32 32" stroke="#8BC34A" stroke-width="3" stroke-linecap="round"></path>
+                    <path d="M32 32C27 26 18 27 15 31C18 35 27 34 32 32Z" fill="#8BC34A"></path>
+                    <path d="M32 32C37 26 46 27 49 31C46 35 37 34 32 32Z" fill="#8BC34A"></path>
+                  </svg>
+                </div>
+                <span class="text-xs sm:text-sm text-gray-700">良好</span>
+              </div>
+            </label>
+
+            <!-- 一般 (黃綠色) -->
+            <label for="status-before-3" class="cursor-pointer group">
+              <input type="radio" id="status-before-3" name="bodyStatusBefore" value="一般" class="hidden peer">
+              <div class="p-2 rounded-xl text-center transition-all border-2 border-gray-200 peer-checked:border-yellow-500 peer-checked:bg-yellow-50 shadow-sm hover:shadow-md">
+                <div class="w-12 h-12 sm:w-16 sm:h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-1 group-hover:bg-yellow-200 transition-colors">
+                  <!-- SVG for '一般' -->
+                  <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 sm:w-14 sm:h-14 drop-shadow-sm">
+                    <ellipse cx="32" cy="56" rx="12" ry="4" fill="#795548"></ellipse>
+                    <path d="M32 56C32 56 30 44 32 36" stroke="#CDDC39" stroke-width="3" stroke-linecap="round"></path>
+                    <path d="M32 36C28 32 20 34 18 38C20 41 28 40 32 36Z" fill="#CDDC39"></path>
+                    <path d="M32 36C36 32 44 34 46 38C44 41 36 40 32 36Z" fill="#CDDC39"></path>
+                  </svg>
+                </div>
+                <span class="text-xs sm:text-sm text-gray-700">一般</span>
+              </div>
+            </label>
+
+            <!-- 較差 (橘色) -->
+            <label for="status-before-4" class="cursor-pointer group">
+              <input type="radio" id="status-before-4" name="bodyStatusBefore" value="較差" class="hidden peer">
+              <div class="p-2 rounded-xl text-center transition-all border-2 border-gray-200 peer-checked:border-orange-600 peer-checked:bg-orange-50 shadow-sm hover:shadow-md">
+                <div class="w-12 h-12 sm:w-16 sm:h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-1 group-hover:bg-orange-200 transition-colors">
+                  <!-- SVG for '較差' -->
+                  <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 sm:w-14 sm:h-14 drop-shadow-sm">
+                    <ellipse cx="32" cy="56" rx="12" ry="4" fill="#795548"></ellipse>
+                    <path d="M32 56C32 56 26 48 28 40" stroke="#FFC107" stroke-width="3" stroke-linecap="round"></path>
+                    <path d="M28 40C24 38 18 42 17 45C20 47 26 44 28 40Z" fill="#FFC107"></path>
+                    <path d="M28 40C32 38 38 42 39 45C36 47 30 44 28 40Z" fill="#FF9800"></path>
+                  </svg>
+                </div>
+                <span class="text-xs sm:text-sm text-gray-700">較差</span>
+              </div>
+            </label>
+
+            <!-- 很差 (深棕色/灰色) -->
+            <label for="status-before-5" class="cursor-pointer group">
+              <input type="radio" id="status-before-5" name="bodyStatusBefore" value="很差" class="hidden peer">
+              <div class="p-2 rounded-xl text-center transition-all border-2 border-gray-200 peer-checked:border-gray-500 peer-checked:bg-gray-100 shadow-sm hover:shadow-md">
+                <div class="w-12 h-12 sm:w-16 sm:h-16 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-1 group-hover:bg-gray-300 transition-colors">
+                  <!-- SVG for '很差' -->
+                  <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 sm:w-14 sm:h-14 drop-shadow-sm">
+                    <ellipse cx="32" cy="56" rx="12" ry="4" fill="#795548"></ellipse>
+                    <path d="M32 56L22 52" stroke="#5D4037" stroke-width="3" stroke-linecap="round"></path>
+                    <path d="M22 52C20 49 16 50 14 53C16 55 20 54 22 52Z" fill="#5D4037"></path>
+                    <path d="M22 52C24 49 28 50 30 53C28 55 24 54 22 52Z" fill="#4E342E"></path>
+                  </svg>
+                </div>
+                <span class="text-xs sm:text-sm text-gray-700">很差</span>
+              </div>
+            </label>
           </div>
+        </div>
 
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-4 mt-6">
+          <!-- 運動前心情 -->
           <div class="form-group">
-            <label for="moodBefore">運動前心情（1–10 分）</label>
-            <select id="moodBefore">
+            <label for="moodBefore" class="block text-sm font-medium text-gray-700 mb-1">運動前心情（1–10 分）</label>
+            <select id="moodBefore" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-primary-indigo focus:border-primary-indigo">
               <option value="">請選擇</option>
               <option value="1">1 (極差)</option>
               <option value="2">2</option>
@@ -208,33 +179,38 @@
               <option value="9">9</option>
               <option value="10">10 (極好)</option>
             </select>
-            <div class="hint">分數越高代表心情越好</div>
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label for="heartRateBefore">運動前一分鐘心跳次數</label>
-            <input type="number" id="heartRateBefore" min="0" placeholder="例如：78" />
+            <p class="text-xs text-gray-500 mt-1">分數越高代表心情越好</p>
           </div>
 
+          <!-- 運動前一分鐘心跳次數 -->
           <div class="form-group">
-            <label for="stepsBefore">運動前步數</label>
-            <input type="number" id="stepsBefore" min="0" placeholder="當天開始運動前的步數" />
+            <label for="heartRateBefore" class="block text-sm font-medium text-gray-700 mb-1">運動前一分鐘心跳次數</label>
+            <input type="number" id="heartRateBefore" min="0" placeholder="例如：78" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-primary-indigo focus:border-primary-indigo" />
+          </div>
+
+          <!-- 運動前步數 -->
+          <div class="form-group">
+            <label for="stepsBefore" class="block text-sm font-medium text-gray-700 mb-1">運動前步數</label>
+            <input type="number" id="stepsBefore" min="0" placeholder="當天開始運動前的步數" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-primary-indigo focus:border-primary-indigo" />
           </div>
         </div>
       </div>
 
-      <div class="card" id="post-card">
-        <div class="card-title">
+      <!-- 運動後紀錄 Card -->
+      <div class="card bg-white rounded-xl shadow-xl p-5 sm:p-6 mb-6">
+        <div class="text-xl font-bold mb-4 flex items-center gap-3 text-gray-700">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary-indigo" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+          </svg>
           運動後紀錄
-          <span class="badge">After</span>
+          <span class="text-xs px-3 py-1 bg-indigo-100 text-primary-indigo font-medium rounded-full">After</span>
         </div>
 
-        <div class="form-row">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-4">
+          <!-- 這週第幾次有氧慢跑 -->
           <div class="form-group">
-            <label for="runIndex">這週第幾次有氧慢跑</label>
-            <select id="runIndex">
+            <label for="runIndex" class="block text-sm font-medium text-gray-700 mb-1">這週第幾次有氧慢跑</label>
+            <select id="runIndex" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-primary-indigo focus:border-primary-indigo">
               <option value="">請選擇</option>
               <option value="第1次">第1次</option>
               <option value="第2次">第2次</option>
@@ -247,43 +223,138 @@
             </select>
           </div>
 
+          <!-- 運動是否有分段進行 -->
           <div class="form-group">
-            <label>運動是否有分段進行</label>
-            <div class="radio-group" id="segmentedGroup">
-              <label> <input type="radio" name="segmented" value="有" />有 </label>
-              <label> <input type="radio" name="segmented" value="沒有" />沒有 </label>
+            <label class="block text-sm font-medium text-gray-700 mb-1">運動是否有分段進行</label>
+            <div class="radio-group flex gap-4 mt-2" id="segmentedGroup">
+              <label class="inline-flex items-center cursor-pointer">
+                <input type="radio" name="segmented" value="有" class="form-radio h-4 w-4 text-primary-indigo focus:ring-primary-indigo" />
+                <span class="ml-2 text-sm text-gray-700">有</span>
+              </label>
+              <label class="inline-flex items-center cursor-pointer">
+                <input type="radio" name="segmented" value="沒有" class="form-radio h-4 w-4 text-primary-indigo focus:ring-primary-indigo" />
+                <span class="ml-2 text-sm text-gray-700">沒有</span>
+              </label>
             </div>
           </div>
 
+          <!-- 分段進行後，是否有完成 -->
           <div class="form-group">
-            <label>分段進行後，是否有完成？</label>
-            <div class="radio-group" id="segmentedDoneGroup">
-              <label> <input type="radio" name="segmentedDone" value="有" />有 </label>
-              <label> <input type="radio" name="segmentedDone" value="沒有" />沒有 </label>
-              <label>
-                <input type="radio" name="segmentedDone" value="不適用" />不適用
+            <label class="block text-sm font-medium text-gray-700 mb-1">分段進行後，是否有完成？</label>
+            <div class="radio-group flex gap-4 mt-2" id="segmentedDoneGroup">
+              <label class="inline-flex items-center cursor-pointer">
+                <input type="radio" name="segmentedDone" value="有" class="form-radio h-4 w-4 text-primary-indigo focus:ring-primary-indigo" />
+                <span class="ml-2 text-sm text-gray-700">有</span>
+              </label>
+              <label class="inline-flex items-center cursor-pointer">
+                <input type="radio" name="segmentedDone" value="沒有" class="form-radio h-4 w-4 text-primary-indigo focus:ring-primary-indigo" />
+                <span class="ml-2 text-sm text-gray-700">沒有</span>
+              </label>
+              <label class="inline-flex items-center cursor-pointer">
+                <input type="radio" name="segmentedDone" value="不適用" class="form-radio h-4 w-4 text-primary-indigo focus:ring-primary-indigo" /> <!-- 移除 checked 屬性 -->
+                <span class="ml-2 text-sm text-gray-700">不適用</span>
               </label>
             </div>
-            <div class="hint">若沒分段，可維持「不適用」</div>
+            <p class="text-xs text-gray-500 mt-1">若沒分段，將自動選擇「不適用」</p>
           </div>
         </div>
 
-        <div class="form-row">
-          <div class="form-group">
-            <label for="bodyStatusAfter">運動後身體狀況</label>
-            <select id="bodyStatusAfter">
-              <option value="">請選擇</option>
-              <option value="非常好">非常好</option>
-              <option value="良好">良好</option>
-              <option value="一般">一般</option>
-              <option value="較差">較差</option>
-              <option value="很差">很差</option>
-            </select>
-          </div>
+        <!-- 運動後身體狀況：使用圖示 Radio Group -->
+        <div class="form-group mt-6 col-span-full">
+          <label class="block text-sm font-medium text-gray-700 mb-2">運動後身體狀況</label>
+          <div id="bodyStatusAfterGroup" class="icon-radio-group flex justify-around space-x-2 sm:space-x-4">
+            <!-- 非常好 (綠色) -->
+            <label for="status-after-1" class="cursor-pointer group">
+              <input type="radio" id="status-after-1" name="bodyStatusAfter" value="非常好" class="hidden peer">
+              <div class="p-2 rounded-xl text-center transition-all border-2 border-gray-200 peer-checked:border-green-600 peer-checked:bg-green-50 shadow-sm hover:shadow-md">
+                <div class="w-12 h-12 sm:w-16 sm:h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-1 group-hover:bg-green-200 transition-colors">
+                  <!-- SVG for '非常好' -->
+                  <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 sm:w-14 sm:h-14 drop-shadow-sm">
+                    <ellipse cx="32" cy="56" rx="12" ry="4" fill="#795548"></ellipse>
+                    <path d="M32 56C32 56 34 40 32 28" stroke="#4CAF50" stroke-width="4" stroke-linecap="round"></path>
+                    <path d="M32 28C26 20 14 22 10 28C14 34 26 32 32 28Z" fill="#4CAF50"></path>
+                    <path d="M32 28C38 20 50 22 54 28C50 34 38 32 32 28Z" fill="#4CAF50"></path>
+                  </svg>
+                </div>
+                <span class="text-xs sm:text-sm text-gray-700">非常好</span>
+              </div>
+            </label>
 
+            <!-- 良好 (淺綠色) -->
+            <label for="status-after-2" class="cursor-pointer group">
+              <input type="radio" id="status-after-2" name="bodyStatusAfter" value="良好" class="hidden peer">
+              <div class="p-2 rounded-xl text-center transition-all border-2 border-gray-200 peer-checked:border-lime-600 peer-checked:bg-lime-50 shadow-sm hover:shadow-md">
+                <div class="w-12 h-12 sm:w-16 sm:h-16 bg-lime-100 rounded-full flex items-center justify-center mx-auto mb-1 group-hover:bg-lime-200 transition-colors">
+                  <!-- SVG for '良好' -->
+                  <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 sm:w-14 sm:h-14 drop-shadow-sm">
+                    <ellipse cx="32" cy="56" rx="12" ry="4" fill="#795548"></ellipse>
+                    <path d="M32 56C32 56 33 42 32 32" stroke="#8BC34A" stroke-width="3" stroke-linecap="round"></path>
+                    <path d="M32 32C27 26 18 27 15 31C18 35 27 34 32 32Z" fill="#8BC34A"></path>
+                    <path d="M32 32C37 26 46 27 49 31C46 35 37 34 32 32Z" fill="#8BC34A"></path>
+                  </svg>
+                </div>
+                <span class="text-xs sm:text-sm text-gray-700">良好</span>
+              </div>
+            </label>
+
+            <!-- 一般 (黃綠色) -->
+            <label for="status-after-3" class="cursor-pointer group">
+              <input type="radio" id="status-after-3" name="bodyStatusAfter" value="一般" class="hidden peer">
+              <div class="p-2 rounded-xl text-center transition-all border-2 border-gray-200 peer-checked:border-yellow-500 peer-checked:bg-yellow-50 shadow-sm hover:shadow-md">
+                <div class="w-12 h-12 sm:w-16 sm:h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-1 group-hover:bg-yellow-200 transition-colors">
+                  <!-- SVG for '一般' -->
+                  <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 sm:w-14 sm:h-14 drop-shadow-sm">
+                    <ellipse cx="32" cy="56" rx="12" ry="4" fill="#795548"></ellipse>
+                    <path d="M32 56C32 56 30 44 32 36" stroke="#CDDC39" stroke-width="3" stroke-linecap="round"></path>
+                    <path d="M32 36C28 32 20 34 18 38C20 41 28 40 32 36Z" fill="#CDDC39"></path>
+                    <path d="M32 36C36 32 44 34 46 38C44 41 36 40 32 36Z" fill="#CDDC39"></path>
+                  </svg>
+                </div>
+                <span class="text-xs sm:text-sm text-gray-700">一般</span>
+              </div>
+            </label>
+
+            <!-- 較差 (橘色) -->
+            <label for="status-after-4" class="cursor-pointer group">
+              <input type="radio" id="status-after-4" name="bodyStatusAfter" value="較差" class="hidden peer">
+              <div class="p-2 rounded-xl text-center transition-all border-2 border-gray-200 peer-checked:border-orange-600 peer-checked:bg-orange-50 shadow-sm hover:shadow-md">
+                <div class="w-12 h-12 sm:w-16 sm:h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-1 group-hover:bg-orange-200 transition-colors">
+                  <!-- SVG for '較差' -->
+                  <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 sm:w-14 sm:h-14 drop-shadow-sm">
+                    <ellipse cx="32" cy="56" rx="12" ry="4" fill="#795548"></ellipse>
+                    <path d="M32 56C32 56 26 48 28 40" stroke="#FFC107" stroke-width="3" stroke-linecap="round"></path>
+                    <path d="M28 40C24 38 18 42 17 45C20 47 26 44 28 40Z" fill="#FFC107"></path>
+                    <path d="M28 40C32 38 38 42 39 45C36 47 30 44 28 40Z" fill="#FF9800"></path>
+                  </svg>
+                </div>
+                <span class="text-xs sm:text-sm text-gray-700">較差</span>
+              </div>
+            </label>
+
+            <!-- 很差 (深棕色/灰色) -->
+            <label for="status-after-5" class="cursor-pointer group">
+              <input type="radio" id="status-after-5" name="bodyStatusAfter" value="很差" class="hidden peer">
+              <div class="p-2 rounded-xl text-center transition-all border-2 border-gray-200 peer-checked:border-gray-500 peer-checked:bg-gray-100 shadow-sm hover:shadow-md">
+                <div class="w-12 h-12 sm:w-16 sm:h-16 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-1 group-hover:bg-gray-300 transition-colors">
+                  <!-- SVG for '很差' -->
+                  <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 sm:w-14 sm:h-14 drop-shadow-sm">
+                    <ellipse cx="32" cy="56" rx="12" ry="4" fill="#795548"></ellipse>
+                    <path d="M32 56L22 52" stroke="#5D4037" stroke-width="3" stroke-linecap="round"></path>
+                    <path d="M22 52C20 49 16 50 14 53C16 55 20 54 22 52Z" fill="#5D4037"></path>
+                    <path d="M22 52C24 49 28 50 30 53C28 55 24 54 22 52Z" fill="#4E342E"></path>
+                  </svg>
+                </div>
+                <span class="text-xs sm:text-sm text-gray-700">很差</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-4 mt-6">
+          <!-- 最後生日歌狀況 -->
           <div class="form-group">
-            <label for="birthdaySong">最後生日歌狀況</label>
-            <select id="birthdaySong">
+            <label for="birthdaySong" class="block text-sm font-medium text-gray-700 mb-1">最後生日歌狀況</label>
+            <select id="birthdaySong" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-primary-indigo focus:border-primary-indigo">
               <option value="">請選擇</option>
               <option value="輕鬆唱完">輕鬆唱完</option>
               <option value="無法唱歌用唸的">無法唱歌用唸的</option>
@@ -292,21 +363,22 @@
             </select>
           </div>
 
+          <!-- 全程運動總時間（分鐘） -->
           <div class="form-group">
-            <label for="totalMinutes">全程運動總時間（分鐘）</label>
-            <input type="number" id="totalMinutes" min="0" placeholder="例如：30" />
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label for="heartRateAfter">運動後一分鐘心跳次數</label>
-            <input type="number" id="heartRateAfter" min="0" placeholder="例如：120" />
+            <label for="totalMinutes" class="block text-sm font-medium text-gray-700 mb-1">全程運動總時間（分鐘）</label>
+            <input type="number" id="totalMinutes" min="0" placeholder="例如：30" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-primary-indigo focus:border-primary-indigo" />
           </div>
 
+          <!-- 運動後一分鐘心跳次數 -->
           <div class="form-group">
-            <label for="moodAfter">運動後心情（1–10 分）</label>
-            <select id="moodAfter">
+            <label for="heartRateAfter" class="block text-sm font-medium text-gray-700 mb-1">運動後一分鐘心跳次數</label>
+            <input type="number" id="heartRateAfter" min="0" placeholder="例如：120" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-primary-indigo focus:border-primary-indigo" />
+          </div>
+
+          <!-- 運動後心情 -->
+          <div class="form-group">
+            <label for="moodAfter" class="block text-sm font-medium text-gray-700 mb-1">運動後心情（1–10 分）</label>
+            <select id="moodAfter" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-primary-indigo focus:border-primary-indigo">
               <option value="">請選擇</option>
               <option value="1">1 (極差)</option>
               <option value="2">2</option>
@@ -321,25 +393,28 @@
             </select>
           </div>
 
+          <!-- 運動後步數 -->
           <div class="form-group">
-            <label for="stepsAfter">運動後步數</label>
-            <input type="number" id="stepsAfter" min="0" placeholder="運動結束當下的步數" />
+            <label for="stepsAfter" class="block text-sm font-medium text-gray-700 mb-1">運動後步數</label>
+            <input type="number" id="stepsAfter" min="0" placeholder="運動結束當下的步數" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-primary-indigo focus:border-primary-indigo" />
           </div>
         </div>
       </div>
 
-      <div class="button-row">
-        <button type="button" class="btn-secondary" id="resetBtn">清除重填</button>
-        <button type="button" class="btn-primary" id="submitBtn">送出記錄</button>
+      <!-- 按鈕區塊 -->
+      <div class="flex justify-end gap-3 mt-6">
+        <button type="button" class="btn-secondary px-6 py-2 bg-gray-200 text-gray-700 hover:bg-gray-300 rounded-full font-medium transition duration-150" id="resetBtn">
+          清除重填
+        </button>
+        <button type="button" class="btn-primary px-6 py-2 bg-primary-indigo text-white hover:bg-indigo-600 rounded-full font-bold shadow-lg shadow-indigo-200 transition duration-150" id="submitBtn">
+          送出記錄
+        </button>
       </div>
 
-      <div id="status" class="status-message"></div>
+      <div id="status" class="status-message text-center mt-4 text-sm font-medium"></div>
     </div>
 
     <script>
-      const WEB_APP_URL =
-        'https://script.google.com/macros/s/AKfycbzAIoupjXUklcZUV6DsBa0gRp859BaXkn--xUR6jIrSECBcHsoCVg2iT93j910t41bW/exec';
-
       const $ = (id) => document.getElementById(id);
 
       function getRadioValue(name) {
@@ -350,44 +425,40 @@
       function setStatus(message, isError = false) {
         const el = $('status');
         el.textContent = message;
-        el.className = 'status-message ' + (isError ? 'error' : 'ok');
+        el.className = 'status-message text-center mt-4 text-sm font-medium ' + (isError ? 'text-red-600' : 'text-green-600');
       }
 
       function clearForm() {
+        // 清除 input 和 select
         document
-          .querySelectorAll('input[type="date"], input[type="number"], input[type="datetime-local"], select')
+          .querySelectorAll('input[type="number"], input[type="datetime-local"], select')
           .forEach((el) => (el.value = ''));
 
+        // 清除所有 radio buttons
         document.querySelectorAll('input[type=radio]').forEach((el) => {
           el.checked = false;
         });
 
-        // 變更：不再手動設置「不適用」為 checked
+        // ⭐ 移除自動勾選「不適用」的邏輯，保持清空狀態
         // const naRadio = document.querySelector('input[name="segmentedDone"][value="不適用"]');
         // if (naRadio) naRadio.checked = true;
 
         setStatus('');
-
         setInitialDateTime();
       }
 
-      // 是否分段 → 自動調整「分段進行後，是否有完成？」的狀態
+      // 運動是否有分段 → 自動調整「分段進行後，是否有完成？」的狀態
       document.getElementById('segmentedGroup').addEventListener('change', () => {
         const segmented = getRadioValue('segmented');
-        // 取得「不適用」的 Radio 按鈕
-        const naRadio = document.querySelector('input[name="segmentedDone"][value="不適用"]');
-
-        // 清空所有選項
+        // 清空所有 segmentedDone 選項
         document.querySelectorAll('input[name="segmentedDone"]').forEach(el => el.checked = false);
-
 
         if (segmented === '沒有') {
           // 如果沒有分段，預設選取「不適用」
+          const naRadio = document.querySelector('input[name="segmentedDone"][value="不適用"]');
           if (naRadio) naRadio.checked = true;
-        } else if (segmented === '有') {
-          // 如果有分段，則不選任何項目 (讓使用者選擇 有/沒有 完成)
-          // 邏輯上，我們只清空，不自動選取「不適用」
         }
+        // 如果 segmented === '有'，則保持 segmentedDone 為空，等待使用者選擇
       });
 
       // 設定 datetime-local 欄位為現在時間的功能
@@ -400,15 +471,17 @@
             const currentDateTime = now.toISOString().slice(0, 16);
             dateInput.value = currentDateTime;
         }
+        // 確保在頁面載入時，segmentedDone 也沒有被選取 (clearForm 的效果)
+        document.querySelectorAll('input[name="segmentedDone"]').forEach(el => el.checked = false);
       }
 
-      // ⭐⭐⭐ 最終成功版 fetch（無 Content-Type → 避免被 CORS 擋）
+      // 提交資料
       document.getElementById('submitBtn').addEventListener('click', async () => {
         setStatus('');
 
         const payload = {
           exerciseDate: $('exerciseDate').value,
-          bodyStatusBefore: $('bodyStatusBefore').value,
+          bodyStatusBefore: getRadioValue('bodyStatusBefore'),
           moodBefore: $('moodBefore').value,
           heartRateBefore: $('heartRateBefore').value,
           stepsBefore: $('stepsBefore').value,
@@ -416,7 +489,7 @@
           runIndex: $('runIndex').value,
           segmented: getRadioValue('segmented'),
           segmentedDone: getRadioValue('segmentedDone'),
-          bodyStatusAfter: $('bodyStatusAfter').value,
+          bodyStatusAfter: getRadioValue('bodyStatusAfter'),
           birthdaySong: $('birthdaySong').value,
           totalMinutes: $('totalMinutes').value,
           heartRateAfter: $('heartRateAfter').value,
@@ -424,17 +497,31 @@
           stepsAfter: $('stepsAfter').value,
         };
 
+        // 驗證邏輯
         if (!payload.exerciseDate) {
           setStatus('請先選擇「運動日期與時間」。', true);
           return;
         }
-        if (!payload.runIndex) {
-          setStatus('請先填寫「這週第幾次有氧慢跑」。', true);
+        if (!payload.bodyStatusBefore) {
+          setStatus('請先填寫「運動前身體狀況」。', true);
           return;
         }
         if (!payload.moodBefore) {
             setStatus('請先填寫「運動前心情」。', true);
             return;
+        }
+        if (!payload.runIndex) {
+          setStatus('請先填寫「這週第幾次有氧慢跑」。', true);
+          return;
+        }
+        // 檢查 segmentedDone 是否已選取 (除非 segmented 設為「有」但未選)
+        if (payload.segmented === '有' && !payload.segmentedDone) {
+             setStatus('請選擇「分段進行後，是否有完成？」（有/沒有）。', true);
+             return;
+        }
+        if (!payload.bodyStatusAfter) {
+          setStatus('請先填寫「運動後身體狀況」。', true);
+          return;
         }
         if (!payload.moodAfter) {
             setStatus('請先填寫「運動後心情」。', true);
@@ -447,7 +534,7 @@
 
           const res = await fetch(WEB_APP_URL, {
             method: 'POST',
-            // ⭐⭐ 重點：不加 headers → 才不會觸發 CORS preflight
+            // 不加 headers 避免 CORS preflight 錯誤
             body: JSON.stringify(payload),
           });
 
@@ -460,6 +547,7 @@
 
           if (json.result === 'success') {
             setStatus('✅ 已完成記錄，辛苦啦！', false);
+            clearForm(); // 送出成功後清空表單
           } else {
             // GAS 內部回傳 error
             setStatus(`送出失敗：${json.error || '後端錯誤'}，請稍後再試一次。`, true);
@@ -472,8 +560,8 @@
 
       document.getElementById('resetBtn').addEventListener('click', () => clearForm());
 
-      // 網頁載入時，自動填入現在時間
-      window.addEventListener('load', setInitialDateTime);
+      // 網頁載入時，自動填入現在時間，並確保所有選項都是空的
+      window.addEventListener('load', clearForm);
 
     </script>
   </body>
