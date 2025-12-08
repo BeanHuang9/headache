@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <title>記錄頭痛運動日誌</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Noto Sans TC', 'Microsoft JhengHei',
+          sans-serif;
+        background: #f7f7fb;
+        margin: 0;
+        padding: 0;
+        color: #333;
+      }
+
+      .page-wrapper {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 24px 16px 40px;
+      }
+
+      h1 {
+        text-align: center;
+        font-size: 24px;
+        margin-bottom: 8px;
+      }
+
+      .subtitle {
+        text-align: center;
+        font-size: 14px;
+        color: #777;
+        margin-bottom: 24px;
+      }
+
+      .card {
+        background: #fff;
+        border-radius: 12px;
+        padding: 20px 16px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+        margin-bottom: 16px;
+      }
+
+      .card-title {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .card-title span.badge {
+        font-size: 12px;
+        padding: 2px 8px;
+        border-radius: 999px;
+        background: #eef2ff;
+        color: #4f46e5;
+      }
+
+      .form-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px 20px;
+        margin-bottom: 12px;
+      }
+
+      .form-group {
+        flex: 1 1 180px;
+        min-width: 160px;
+      }
+
+      label {
+        display: block;
+        font-size: 13px;
+        margin-bottom: 4px;
+        color: #444;
+      }
+
+      input[type='date'],
+      input[type='number'],
+      select {
+        width: 100%;
+        padding: 6px 8px;
+        font-size: 14px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+      }
+
+      input[type='number']::-webkit-inner-spin-button,
+      input[type='number']::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      .radio-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 16px;
+        font-size: 13px;
+      }
+
+      .radio-group label {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        cursor: pointer;
+        margin-bottom: 0;
+      }
+
+      .hint {
+        font-size: 12px;
+        color: #888;
+        margin-top: 2px;
+      }
+
+      .button-row {
+        margin-top: 16px;
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+      }
+
+      button {
+        border-radius: 999px;
+        border: none;
+        padding: 8px 18px;
+        font-size: 14px;
+        cursor: pointer;
+      }
+
+      .btn-secondary {
+        background: #e5e7eb;
+        color: #374151;
+      }
+
+      .btn-primary {
+        background: #4f46e5;
+        color: #fff;
+      }
+
+      .status-message {
+        margin-top: 12px;
+        font-size: 13px;
+      }
+
+      .status-message.ok {
+        color: #16a34a;
+      }
+
+      .status-message.error {
+        color: #dc2626;
+      }
+
+      @media (max-width: 600px) {
+        .card {
+          padding: 16px 12px;
+        }
+        h1 {
+          font-size: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page-wrapper">
+      <h1>記錄頭痛運動日誌</h1>
+      <div class="subtitle">慢跑前後的身體與心情，通通一起記下來。</div>
+
+      <!-- 運動前評估 -->
+      <div class="card" id="pre-card">
+        <div class="card-title">
+          運動前評估
+          <span class="badge">Before</span>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="exerciseDate">運動日期</label>
+            <input type="date" id="exerciseDate" />
+          </div>
+
+          <div class="form-group">
+            <label for="bodyStatusBefore">運動前身體狀況</label>
+            <select id="bodyStatusBefore">
+              <option value="">請選擇</option>
+              <option value="非常好">非常好</option>
+              <option value="良好">良好</option>
+              <option value="一般">一般</option>
+              <option value="較差">較差</option>
+              <option value="很差">很差</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="moodBefore">運動前心情（1–10 分）</label>
+            <input type="number" id="moodBefore" min="1" max="10" step="1" placeholder="1-10" />
+            <div class="hint">分數越高代表心情越好</div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="heartRateBefore">運動前一分鐘心跳次數</label>
+            <input type="number" id="heartRateBefore" min="0" placeholder="例如：78" />
+          </div>
+
+          <div class="form-group">
+            <label for="stepsBefore">運動前步數</label>
+            <input type="number" id="stepsBefore" min="0" placeholder="當天開始運動前的步數" />
+          </div>
+        </div>
+      </div>
+
+      <!-- 運動後紀錄 -->
+      <div class="card" id="post-card">
+        <div class="card-title">
+          運動後紀錄
+          <span class="badge">After</span>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="runIndex">這週第幾次有氧慢跑</label>
+            <select id="runIndex">
+              <option value="">請選擇</option>
+              <option value="第1次">第1次</option>
+              <option value="第2次">第2次</option>
+              <option value="第3次">第3次</option>
+              <option value="第4次">第4次</option>
+              <option value="第5次">第5次</option>
+              <option value="第6次">第6次</option>
+              <option value="第7次">第7次</option>
+              <option value="第8次">第8次</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>運動是否有分段進行</label>
+            <div class="radio-group" id="segmentedGroup">
+              <label> <input type="radio" name="segmented" value="有" />有 </label>
+              <label> <input type="radio" name="segmented" value="沒有" />沒有 </label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>分段進行後，是否有完成？</label>
+            <div class="radio-group" id="segmentedDoneGroup">
+              <label> <input type="radio" name="segmentedDone" value="有" />有 </label>
+              <label> <input type="radio" name="segmentedDone" value="沒有" />沒有 </label>
+              <label>
+                <input type="radio" name="segmentedDone" value="不適用" checked />不適用
+              </label>
+            </div>
+            <div class="hint">若沒分段，可維持「不適用」</div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="bodyStatusAfter">運動後身體狀況</label>
+            <select id="bodyStatusAfter">
+              <option value="">請選擇</option>
+              <option value="非常好">非常好</option>
+              <option value="良好">良好</option>
+              <option value="一般">一般</option>
+              <option value="較差">較差</option>
+              <option value="很差">很差</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="birthdaySong">最後生日歌狀況</label>
+            <select id="birthdaySong">
+              <option value="">請選擇</option>
+              <option value="輕鬆唱完">輕鬆唱完</option>
+              <option value="無法唱歌用唸的">無法唱歌用唸的</option>
+              <option value="無法唱歌只能兩三句話">無法唱歌只能兩三句話</option>
+              <option value="喘到無法說話">喘到無法說話</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="totalMinutes">全程運動總時間（分鐘）</label>
+            <input type="number" id="totalMinutes" min="0" placeholder="例如：30" />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="heartRateAfter">運動後一分鐘心跳次數</label>
+            <input type="number" id="heartRateAfter" min="0" placeholder="例如：120" />
+          </div>
+
+          <div class="form-group">
+            <label for="moodAfter">運動後心情（1–10 分）</label>
+            <input type="number" id="moodAfter" min="1" max="10" step="1" placeholder="1-10" />
+          </div>
+
+          <div class="form-group">
+            <label for="stepsAfter">運動後步數</label>
+            <!-- 需求原文寫「運動前步數」，此處實務上改為運動後步數 -->
+            <input type="number" id="stepsAfter" min="0" placeholder="運動結束當下的步數" />
+          </div>
+        </div>
+      </div>
+
+      <!-- 送出 -->
+      <div class="button-row">
+        <button type="button" class="btn-secondary" id="resetBtn">清除重填</button>
+        <button type="button" class="btn-primary" id="submitBtn">送出記錄</button>
+      </div>
+
+      <div id="status" class="status-message"></div>
+    </div>
+
+    <script>
+      // ★ 把這裡換成你部署好的 Apps Script Web App URL
+      const WEB_APP_URL =
+        'https://script.google.com/macros/s/AKfycbyfjMmFHnQfUoQwRaC3oM46MqufY75jkYhLMxzGnf7dvjIU4fkIFwwAXuEM59qY6kI/exec';
+
+      const $ = (id) => document.getElementById(id);
+
+      function getRadioValue(name) {
+        const checked = document.querySelector(`input[name="${name}"]:checked`);
+        return checked ? checked.value : '';
+      }
+
+      function setStatus(message, isError = false) {
+        const el = $('status');
+        el.textContent = message;
+        el.className = 'status-message ' + (isError ? 'error' : 'ok');
+      }
+
+      function clearForm() {
+        // 清空所有 input/select
+        document
+          .querySelectorAll('input[type="date"], input[type="number"], select')
+          .forEach((el) => {
+            el.value = '';
+          });
+
+        // radio 預設 & 清空
+        document.querySelectorAll('input[type="radio"]').forEach((el) => {
+          el.checked = false;
+        });
+
+        // 分段完成預設回「不適用」
+        const naRadio = document.querySelector('input[name="segmentedDone"][value="不適用"]');
+        if (naRadio) naRadio.checked = true;
+
+        setStatus('');
+      }
+
+      // 根據「有無分段」調整「是否完成」預設值
+      function handleSegmentedChange() {
+        const segmented = getRadioValue('segmented');
+        if (segmented === '有') {
+          // 若有分段，讓「不適用」取消勾選（留給使用者選有/沒有）
+          const naRadio = document.querySelector('input[name="segmentedDone"][value="不適用"]');
+          if (naRadio) naRadio.checked = false;
+        } else if (segmented === '沒有') {
+          // 若沒有分段，自動勾回不適用
+          const naRadio = document.querySelector('input[name="segmentedDone"][value="不適用"]');
+          if (naRadio) naRadio.checked = true;
+        }
+      }
+
+      document.getElementById('segmentedGroup').addEventListener('change', handleSegmentedChange);
+
+      // 送出
+      document.getElementById('submitBtn').addEventListener('click', async () => {
+        setStatus('');
+
+        const payload = {
+          // 運動前評估
+          exerciseDate: $('exerciseDate').value,
+          bodyStatusBefore: $('bodyStatusBefore').value,
+          moodBefore: $('moodBefore').value,
+          heartRateBefore: $('heartRateBefore').value,
+          stepsBefore: $('stepsBefore').value,
+
+          // 運動後紀錄
+          runIndex: $('runIndex').value,
+          segmented: getRadioValue('segmented'),
+          segmentedDone: getRadioValue('segmentedDone'),
+          bodyStatusAfter: $('bodyStatusAfter').value,
+          birthdaySong: $('birthdaySong').value,
+          totalMinutes: $('totalMinutes').value,
+          heartRateAfter: $('heartRateAfter').value,
+          moodAfter: $('moodAfter').value,
+          stepsAfter: $('stepsAfter').value,
+        };
+
+        // 簡單必填檢查：日期 / 這週第幾次
+        if (!payload.exerciseDate) {
+          setStatus('請先選擇「運動日期」。', true);
+          return;
+        }
+        if (!payload.runIndex) {
+          setStatus('請先填寫「這週第幾次有氧慢跑」。', true);
+          return;
+        }
+
+        try {
+          setStatus('資料送出中，請稍候…');
+
+          const res = await fetch(WEB_APP_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+          });
+
+          const json = await res.json();
+          if (json.result === 'success') {
+            setStatus('已完成記錄，辛苦啦！', false);
+            // 可自行決定要不要清空表單
+            // clearForm();
+          } else {
+            setStatus('送出失敗，請稍後再試一次。', true);
+          }
+        } catch (err) {
+          console.error(err);
+          setStatus('無法連線到記錄表，請檢查網路或 Web App 設定。', true);
+        }
+      });
+
+      document.getElementById('resetBtn').addEventListener('click', () => {
+        clearForm();
+      });
+    </script>
+  </body>
+</html>
