@@ -316,8 +316,7 @@
     </div>
 
     <script>
-      // ★ 把這裡換成你部署好的 Apps Script Web App URL
-
+      // ★ 用你最新部署（Headache-5）的 Web App URL
       const WEB_APP_URL =
         'https://script.google.com/macros/s/AKfycbzmUzklCPWNjX1R4nnPzwglqb3QfujDWbGokedT9mze8mitBpXu6J47bpCgQe6L9y4y/exec';
 
@@ -335,54 +334,43 @@
       }
 
       function clearForm() {
-        // 清空所有 input/select
         document
           .querySelectorAll('input[type="date"], input[type="number"], select')
-          .forEach((el) => {
-            el.value = '';
-          });
+          .forEach((el) => (el.value = ''));
 
-        // radio 預設 & 清空
-        document.querySelectorAll('input[type="radio"]').forEach((el) => {
+        document.querySelectorAll('input[type=radio]').forEach((el) => {
           el.checked = false;
         });
 
-        // 分段完成預設回「不適用」
         const naRadio = document.querySelector('input[name="segmentedDone"][value="不適用"]');
         if (naRadio) naRadio.checked = true;
 
         setStatus('');
       }
 
-      // 根據「有無分段」調整「是否完成」預設值
-      function handleSegmentedChange() {
+      // 是否分段 → 自動調整「不適用」
+      document.getElementById('segmentedGroup').addEventListener('change', () => {
         const segmented = getRadioValue('segmented');
+        const naRadio = document.querySelector('input[name="segmentedDone"][value="不適用"]');
+
         if (segmented === '有') {
-          // 若有分段，讓「不適用」取消勾選（留給使用者選有/沒有）
-          const naRadio = document.querySelector('input[name="segmentedDone"][value="不適用"]');
           if (naRadio) naRadio.checked = false;
         } else if (segmented === '沒有') {
-          // 若沒有分段，自動勾回不適用
-          const naRadio = document.querySelector('input[name="segmentedDone"][value="不適用"]');
           if (naRadio) naRadio.checked = true;
         }
-      }
+      });
 
-      document.getElementById('segmentedGroup').addEventListener('change', handleSegmentedChange);
-
-      // 送出
+      // ⭐⭐⭐ 最終成功版 fetch（無 Content-Type → 避免被 CORS 擋）
       document.getElementById('submitBtn').addEventListener('click', async () => {
         setStatus('');
 
         const payload = {
-          // 運動前評估
           exerciseDate: $('exerciseDate').value,
           bodyStatusBefore: $('bodyStatusBefore').value,
           moodBefore: $('moodBefore').value,
           heartRateBefore: $('heartRateBefore').value,
           stepsBefore: $('stepsBefore').value,
 
-          // 運動後紀錄
           runIndex: $('runIndex').value,
           segmented: getRadioValue('segmented'),
           segmentedDone: getRadioValue('segmentedDone'),
@@ -394,7 +382,6 @@
           stepsAfter: $('stepsAfter').value,
         };
 
-        // 簡單必填檢查：日期 / 這週第幾次
         if (!payload.exerciseDate) {
           setStatus('請先選擇「運動日期」。', true);
           return;
@@ -409,15 +396,14 @@
 
           const res = await fetch(WEB_APP_URL, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            // ⭐⭐ 重點：不加 headers → 才不會觸發 CORS preflight
             body: JSON.stringify(payload),
           });
 
           const json = await res.json();
+
           if (json.result === 'success') {
             setStatus('已完成記錄，辛苦啦！', false);
-            // 可自行決定要不要清空表單
-            // clearForm();
           } else {
             setStatus('送出失敗，請稍後再試一次。', true);
           }
@@ -427,9 +413,7 @@
         }
       });
 
-      document.getElementById('resetBtn').addEventListener('click', () => {
-        clearForm();
-      });
+      document.getElementById('resetBtn').addEventListener('click', () => clearForm());
     </script>
   </body>
 </html>
