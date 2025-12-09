@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
   <head>
     <meta charset="UTF-8" />
-    <title>豆子擊退頭痛日誌｜</title>
+    <title>豆子擊退頭痛日誌</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <link rel="icon" type="image/png" href="assets/img/icon.png" />
@@ -15,9 +15,10 @@
     <style>
       /* 確保中文字體優先 */
       body {
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Noto Sans TC',
-          'Microsoft JhengHei', sans-serif;
+        font-family: 'Zen Maru Gothic', 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei',
+          sans-serif;
       }
+
       /* 隱藏數字輸入框的上下箭頭 */
       input[type='number']::-webkit-inner-spin-button,
       input[type='number']::-webkit-outer-spin-button {
@@ -476,6 +477,112 @@
             </div>
           </div>
         </div>
+
+        <!-- 痛感等級選擇 -->
+<div class="form-group mt-6 col-span-full">
+  <label class="block text-sm font-medium text-gray-700 mb-2">頭痛程度</label>
+
+  <div class="icon-radio-group flex justify-start space-x-2 sm:space-x-4">
+
+    <!-- 不痛 Level 0 -->
+    <label class="cursor-pointer group">
+      <input
+        type="radio"
+        name="painLevelBefore"
+        value="不痛"
+        class="hidden peer"
+      />
+      <div
+        class="p-2 rounded-xl text-center transition-all border-2 border-gray-200 peer-checked:border-[#6EC1D1] peer-checked:bg-[#E3F7FA] shadow-sm hover:shadow-md"
+      >
+        <div
+          class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-1 group-hover:bg-[#CAE9F0] transition-colors"
+        >
+          <!-- 你可以換成自己的不痛 SVG -->
+          <img src="assets/img/icon-pain-1.svg" class="w-12 h-12" />
+        </div>
+        <span class="text-sm text-gray-700 font-semibold">不痛</span>
+        <div class="text-[10px] text-green-700 mt-1 bg-green-100 px-2 py-0.5 rounded-full">
+          Level 0
+        </div>
+      </div>
+    </label>
+
+    <!-- 小痛 Level 1–3 -->
+    <label class="cursor-pointer group">
+      <input
+        type="radio"
+        name="painLevelBefore"
+        value="小痛"
+        class="hidden peer"
+      />
+      <div
+        class="p-2 rounded-xl text-center transition-all border-2 border-gray-200 peer-checked:border-[#F2CF63] peer-checked:bg-[#FFF8D7] shadow-sm hover:shadow-md"
+      >
+        <div
+          class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-1 group-hover:bg-[#FFE98B] transition-colors"
+        >
+          <!-- 小痛 SVG -->
+          <img src="assets/img/icon-pain-2.svg" class="w-12 h-12" />
+        </div>
+        <span class="text-sm text-gray-700 font-semibold">小痛</span>
+        <div class="text-[10px] text-yellow-700 mt-1 bg-yellow-100 px-2 py-0.5 rounded-full">
+          Level 1–3
+        </div>
+      </div>
+    </label>
+
+    <!-- 中痛 Level 4–6 -->
+    <label class="cursor-pointer group">
+      <input
+        type="radio"
+        name="painLevelBefore"
+        value="中痛"
+        class="hidden peer"
+      />
+      <div
+        class="p-2 rounded-xl text-center transition-all border-2 border-gray-200 peer-checked:border-[#FFB794] peer-checked:bg-[#FFE8DC] shadow-sm hover:shadow-md"
+      >
+        <div
+          class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-1 group-hover:bg-[#FFD3C0] transition-colors"
+        >
+          <!-- 中痛 SVG -->
+         <img src="assets/img/icon-pain-3.svg" class="w-12 h-12" />
+        </div>
+        <span class="text-sm text-gray-700 font-semibold">中痛</span>
+        <div class="text-[10px] text-orange-700 mt-1 bg-orange-100 px-2 py-0.5 rounded-full">
+          Level 4–6
+        </div>
+      </div>
+    </label>
+
+    <!-- 大痛 Level 7–10 -->
+    <label class="cursor-pointer group">
+      <input
+        type="radio"
+        name="painLevelBefore"
+        value="大痛"
+        class="hidden peer"
+      />
+      <div
+        class="p-2 rounded-xl text-center transition-all border-2 border-gray-200 peer-checked:border-[#F37B73] peer-checked:bg-[#FFE4E2] shadow-sm hover:shadow-md"
+      >
+        <div
+          class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-1 group-hover:bg-[#FFB7B3] transition-colors"
+        >
+          <!-- 大痛 SVG -->
+          <img src="assets/img/icon-pain-4.svg" class="w-12 h-12" />
+        </div>
+        <span class="text-sm text-gray-700 font-semibold">大痛</span>
+        <div class="text-[10px] text-red-700 mt-1 bg-red-100 px-2 py-0.5 rounded-full">
+          Level 7–10
+        </div>
+      </div>
+    </label>
+
+  </div>
+</div>
+
       </div>
 
       <!-- 運動後紀錄 Card -->
@@ -1008,6 +1115,111 @@
             </div>
           </div>
         </div>
+
+        <!-- 痛感等級選擇 -->
+<div class="form-group mt-6 col-span-full">
+  <label class="block text-sm font-medium text-gray-700 mb-2">頭痛程度</label>
+
+  <div class="icon-radio-group flex justify-start space-x-2 sm:space-x-4">
+
+    <!-- 不痛 Level 0 -->
+    <label class="cursor-pointer group">
+      <input
+        type="radio"
+        name="painLevelAfter"
+        value="不痛"
+        class="hidden peer"
+      />
+      <div
+        class="p-2 rounded-xl text-center transition-all border-2 border-gray-200 peer-checked:border-[#6EC1D1] peer-checked:bg-[#E3F7FA] shadow-sm hover:shadow-md"
+      >
+        <div
+          class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-1 group-hover:bg-[#CAE9F0] transition-colors"
+        >
+          <!-- 你可以換成自己的不痛 SVG -->
+          <img src="assets/img/icon-pain-1.svg" class="w-12 h-12" />
+        </div>
+        <span class="text-sm text-gray-700 font-semibold">不痛</span>
+        <div class="text-[10px] text-green-700 mt-1 bg-green-100 px-2 py-0.5 rounded-full">
+          Level 0
+        </div>
+      </div>
+    </label>
+
+    <!-- 小痛 Level 1–3 -->
+    <label class="cursor-pointer group">
+      <input
+        type="radio"
+        name="painLevelAfter"
+        value="小痛"
+        class="hidden peer"
+      />
+      <div
+        class="p-2 rounded-xl text-center transition-all border-2 border-gray-200 peer-checked:border-[#F2CF63] peer-checked:bg-[#FFF8D7] shadow-sm hover:shadow-md"
+      >
+        <div
+          class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-1 group-hover:bg-[#FFE98B] transition-colors"
+        >
+          <!-- 小痛 SVG -->
+          <img src="assets/img/icon-pain-2.svg" class="w-12 h-12" />
+        </div>
+        <span class="text-sm text-gray-700 font-semibold">小痛</span>
+        <div class="text-[10px] text-yellow-700 mt-1 bg-yellow-100 px-2 py-0.5 rounded-full">
+          Level 1–3
+        </div>
+      </div>
+    </label>
+
+    <!-- 中痛 Level 4–6 -->
+    <label class="cursor-pointer group">
+      <input
+        type="radio"
+        name="painLevelAfter"
+        value="中痛"
+        class="hidden peer"
+      />
+      <div
+        class="p-2 rounded-xl text-center transition-all border-2 border-gray-200 peer-checked:border-[#FFB794] peer-checked:bg-[#FFE8DC] shadow-sm hover:shadow-md"
+      >
+        <div
+          class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-1 group-hover:bg-[#FFD3C0] transition-colors"
+        >
+          <!-- 中痛 SVG -->
+         <img src="assets/img/icon-pain-3.svg" class="w-12 h-12" />
+        </div>
+        <span class="text-sm text-gray-700 font-semibold">中痛</span>
+        <div class="text-[10px] text-orange-700 mt-1 bg-orange-100 px-2 py-0.5 rounded-full">
+          Level 4–6
+        </div>
+      </div>
+    </label>
+
+    <!-- 大痛 Level 7–10 -->
+    <label class="cursor-pointer group">
+      <input
+        type="radio"
+        name="painLevelAfter"
+        value="大痛"
+        class="hidden peer"
+      />
+      <div
+        class="p-2 rounded-xl text-center transition-all border-2 border-gray-200 peer-checked:border-[#F37B73] peer-checked:bg-[#FFE4E2] shadow-sm hover:shadow-md"
+      >
+        <div
+          class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-1 group-hover:bg-[#FFB7B3] transition-colors"
+        >
+          <!-- 大痛 SVG -->
+          <img src="assets/img/icon-pain-4.svg" class="w-12 h-12" />
+        </div>
+        <span class="text-sm text-gray-700 font-semibold">大痛</span>
+        <div class="text-[10px] text-red-700 mt-1 bg-red-100 px-2 py-0.5 rounded-full">
+          Level 7–10
+        </div>
+      </div>
+    </label>
+
+  </div>
+</div>
       </div>
 
       <!-- 按鈕區塊 -->
@@ -1111,22 +1323,29 @@
         setStatus('');
 
         const payload = {
-          exerciseDate: $('exerciseDate').value,
-          bodyStatusBefore: getRadioValue('bodyStatusBefore'),
-          moodBefore: $('moodBefore').value,
-          heartRateBefore: $('heartRateBefore').value,
-          stepsBefore: $('stepsBefore').value,
+  exerciseDate: $('exerciseDate').value,
+  bodyStatusBefore: getRadioValue('bodyStatusBefore'),
+  moodBefore: $('moodBefore').value,
+  heartRateBefore: $('heartRateBefore').value,
+  stepsBefore: $('stepsBefore').value,
 
-          runIndex: $('runIndex').value,
-          segmented: getRadioValue('segmented'),
-          segmentedDone: getRadioValue('segmentedDone'),
-          bodyStatusAfter: getRadioValue('bodyStatusAfter'),
-          birthdaySong: $('birthdaySong').value,
-          totalMinutes: $('totalMinutes').value,
-          heartRateAfter: $('heartRateAfter').value,
-          moodAfter: $('moodAfter').value,
-          stepsAfter: $('stepsAfter').value,
-        };
+  runIndex: $('runIndex').value,
+  segmented: getRadioValue('segmented'),
+  segmentedDone: getRadioValue('segmentedDone'),
+  bodyStatusAfter: getRadioValue('bodyStatusAfter'),
+  birthdaySong: $('birthdaySong').value,
+  totalMinutes: $('totalMinutes').value,
+  heartRateAfter: $('heartRateAfter').value,
+  moodAfter: $('moodAfter').value,
+  stepsAfter: $('stepsAfter').value,
+
+  // ⭐ 新增：運動前痛感
+  painLevelBefore: getRadioValue('painLevelBefore'),
+
+  // ⭐ 新增：運動後痛感
+  painLevelAfter: getRadioValue('painLevelAfter'),
+};
+
 
         // 驗證邏輯
         if (!payload.exerciseDate) {
