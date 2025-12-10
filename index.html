@@ -213,6 +213,26 @@
         transform: translateY(-1px);
       }
 
+      /* ====== 按鈕列：手機版三等份不換行 ====== */
+.button-row {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.button-row > * {
+  flex: 1 1 0%;        /* 三等份 */
+  text-align: center;
+  white-space: nowrap; /* 禁止自動換行 */
+}
+
+/* 按鈕內文字自動縮小，避免長字換行 */
+.button-row button,
+.button-row a {
+  padding: 0.75rem 0.5rem;
+  font-size: 0.95rem;
+}
+
+
       /* ========= 狀態訊息 ========= */
       .status-message {
         letter-spacing: 0.02em;
@@ -1335,34 +1355,13 @@
       </div>
 
       <!-- 按鈕區塊 -->
-      <div class="flex justify-end gap-3 mt-6">
-        <!-- 查看資料表（新增） -->
-        <a
-          href="https://docs.google.com/spreadsheets/d/1ws2f3wpwveQbjwHlW9azFj8Ba738n0052VqAp9_s5t4/edit?gid=0#gid=0"
-          target="_blank"
-          class="px-6 py-2 bg-pink-500 text-white hover:bg-pink-600 rounded-full shadow-md transition duration-150 flex items-center"
-        >
-          查看資料表
-        </a>
+       <div class="button-row mt-6">
+  <a href="https://docs.google.com/spreadsheets/d/1ws2f3wpwveQbjwHlW9azFj8Ba738n0052VqAp9_s5t4/edit?gid=0#gid=0" class="btn-view">查看資料表</a>
+  <button class="btn-secondary">清除重填</button>
+  <button class="btn-primary">送出記錄</button>
+</div>
 
-        <!-- 清除重填 -->
-        <button
-          type="button"
-          class="btn-secondary px-6 py-2 bg-gray-200 text-gray-700 hover:bg-gray-300 rounded-full font-medium transition duration-150"
-          id="resetBtn"
-        >
-          清除重填
-        </button>
 
-        <!-- 送出記錄 -->
-        <button
-          type="button"
-          class="btn-primary px-6 py-2 bg-primary-indigo text-white hover:bg-indigo-600 rounded-full font-bold shadow-lg shadow-indigo-200 transition duration-150"
-          id="submitBtn"
-        >
-          送出記錄
-        </button>
-      </div>
 
       <div id="status" class="status-message text-center mt-4 text-sm font-medium"></div>
     </div>
