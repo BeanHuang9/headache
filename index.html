@@ -1353,36 +1353,46 @@
         </div>
       </div>
 
-
       <!-- 備註 Card -->
-<div class="card bg-white rounded-xl shadow-xl p-5 sm:p-6 mb-6">
-  <div class="text-xl font-normal mb-4 flex items-center gap-3 text-gray-700">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary-indigo"
-      fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-      <path stroke-linecap="round" stroke-linejoin="round"
-        d="M12 20h9m-9 0H3m9 0V4m0 0L6 9m6-5l6 5" />
-    </svg>
-    備註
-    <span class="text-xs px-3 py-1 bg-indigo-100 text-primary-indigo font-medium rounded-full">
-      Notes
-    </span>
-  </div>
+      <div class="card bg-white rounded-xl shadow-xl p-5 sm:p-6 mb-6">
+        <div class="text-xl font-normal mb-4 flex items-center gap-3 text-gray-700">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6 text-primary-indigo"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12 20h9m-9 0H3m9 0V4m0 0L6 9m6-5l6 5"
+            />
+          </svg>
+          備註
+          <span
+            class="text-xs px-3 py-1 bg-indigo-100 text-primary-indigo font-medium rounded-full"
+          >
+            Notes
+          </span>
+        </div>
 
-  <div class="form-group">
-    <label for="note" class="block text-sm font-medium text-gray-700 mb-1">
-      想記錄什麼都可以（例如頭痛發生時機、特別感受、天氣、飲食…）
-    </label>
+        <div class="form-group">
+          <label for="note" class="block text-sm font-medium text-gray-700 mb-1">
+            想記錄什麼都可以（例如頭痛發生時機、特別感受、天氣、飲食…）
+          </label>
 
-    <textarea id="note"
-      class="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-indigo focus:border-primary-indigo transition-all"
-      rows="4" placeholder="今天的頭痛在跑到第 2 公里時開始感覺明顯…"></textarea>
+          <textarea
+            id="note"
+            class="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-indigo focus:border-primary-indigo transition-all"
+            rows="4"
+            placeholder="今天的頭痛在跑到第 2 公里時開始感覺明顯…"
+          ></textarea>
 
-    <p class="text-xs text-gray-500 mt-1">此欄可自由書寫，也可留空。</p>
-  </div>
-</div>
-
-
-
+          <p class="text-xs text-gray-500 mt-1">此欄可自由書寫，也可留空。</p>
+        </div>
+      </div>
 
       <!-- 按鈕區塊 -->
       <div class="button-row mt-6">
@@ -1391,8 +1401,10 @@
           class="btn-view"
           >查看資料表</a
         >
-        <button class="btn-secondary">清除重填</button>
-        <button class="btn-primary">送出記錄</button>
+
+        <button id="resetBtn" class="btn-secondary">清除重填</button>
+
+        <button id="submitBtn" class="btn-primary">送出記錄</button>
       </div>
 
       <div id="status" class="status-message text-center mt-4 text-sm font-medium"></div>
@@ -1419,7 +1431,7 @@
         document
           .querySelectorAll('input[type="number"], input[type="datetime-local"], select')
           .forEach((el) => (el.value = ''));
-          $('note').value = '';
+        $('note').value = '';
 
         // 清除所有 radio buttons
         document.querySelectorAll('input[type=radio]').forEach((el) => {
